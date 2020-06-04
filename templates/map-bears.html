@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <link rel="stylesheet" href="/static/css/maps.css">
+  <link rel="stylesheet" href="/static/css/bears.css">
+
+  <script src="/static/js/mapStyles.js"></script>
+  <script src="/static/js/bears.js"></script>
+  <script
+    async defer
+    src="https://maps.googleapis.com/maps/api/js?key=<YOURAPI>&callback=initMap&libraries=places">
+  </script>
+
+
+
+
+
+{% endblock %}
+
+{% block body %}
+  <header>
+    <nav>
+      <section id="links-right">
+        <a href="/">home</a>
+      </section>
+    </nav>
+  </header>
+
+  <main>
+
+    <form> 
+      <div> 
+        Tell us where the photo is from 
+        <input type= "text" name = "find your location" id = 'autocomplete_search'>
+      </div>
+    </form>
+
+    <script>
+  google.maps.event.addDomListener(window, 'load', initialize);
+    function initialize() {
+      var input = document.getElementById('autocomplete_search');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.addListener('place_changed', function () {
+      var place = autocomplete.getPlace();
+      // place variable will have all the information you are looking for.
+      $('#lat').val(place.geometry['location'].lat());
+      $('#long').val(place.geometry['location'].lng());
+    });
+  }
+</script>
+
+    <section class="map">
+      <div id="map"></div>
+
+
+    </section>
+  </main>
+{% endblock %}
